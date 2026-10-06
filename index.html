@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prediction Market Monitor | Case Study</title>
+<meta name="description" content="Real-time on-chain monitoring system for prediction-market activity on Polygon, with a paper-trading simulator and a live WebSocket dashboard.">
+<style>
+:root{--bg:#0d1117;--card:#161b22;--line:#30363d;--fg:#e6edf3;--mut:#8b949e;--acc:#8b5cf6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 "Segoe UI",Helvetica,Arial,sans-serif}
+main{max-width:1040px;margin:0 auto;padding:56px 16px 80px}
+a{color:var(--acc)}h1{font-size:clamp(30px,5vw,46px);line-height:1.15;margin:0 0 12px}
+h2{font-size:22px;margin:56px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.kicker{color:var(--acc);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:13px}
+.lead{font-size:19px;color:var(--mut);max-width:760px}
+.note{border:1px solid var(--line);border-left:4px solid var(--acc);background:var(--card);padding:14px 18px;border-radius:8px;margin:28px 0}
+.hero{width:100%;border-radius:12px;border:1px solid var(--line);margin-top:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0;list-style:none}
+.chips li{border:1px solid var(--line);background:var(--card);padding:5px 12px;border-radius:999px;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;padding:0;list-style:none}
+.grid li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+ol li{margin:6px 0}.arch{width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}
+figure{margin:0 0 28px}figure img{width:100%;border-radius:10px;border:1px solid var(--line)}
+figcaption{color:var(--mut);font-size:14px;margin-top:6px}
+footer{margin-top:64px;color:var(--mut);font-size:14px;border-top:1px solid var(--line);padding-top:20px}
+</style></head><body><main>
+<div class="kicker">Case study &middot; Private project</div>
+<h1>Prediction Market Monitor</h1>
+<p class="lead">Real-time on-chain monitoring system for prediction-market activity on Polygon, with a paper-trading simulator and a live WebSocket dashboard.</p>
+<div class="note"><strong>This is a proprietary project. Source code is private. This page describes the system&#x27;s architecture and capabilities only.</strong></div>
+<p><strong>Status:</strong> Paper trading only. The system places no orders.</p>
+<h2>Problem it solves</h2><p>Prediction-market activity settles on-chain, but raw blocks are unreadable for a person watching in real time. This system reads new Polygon blocks, decodes exchange trades from a configured watchlist of wallets, scores each wallet&#x27;s track record, and streams everything to a dashboard where trades can be followed or skipped in a paper-trading simulator.</p>
+<h2>Architecture</h2><img class="arch" src="assets/architecture.svg" alt="Architecture diagram"><ol><li>The ingestion loop polls new Polygon blocks and decodes trades sent to the prediction-market exchange contracts.</li><li>Trades from watched wallets are normalized and each wallet&#x27;s score is updated.</li><li>Events are pushed to every connected dashboard over a WebSocket.</li><li>The operator follows or skips each trade; the simulator records the outcome without touching real funds.</li><li>If the RPC is unreachable, the service switches to a mock feed so the dashboard keeps working.</li></ol>
+<h2>Key features</h2><ul class="grid"><li>On-chain trade decoding from raw blocks and receipts</li><li>Per-wallet scoring updated on every event</li><li>Paper-trading simulator, no live orders</li><li>WebSocket push to any number of dashboards</li><li>Automatic fallback feed when the RPC is down</li><li>Kanban-style dashboard with per-trade detail</li></ul>
+<h2>Tech stack</h2><ul class="chips"><li>Python</li><li>FastAPI</li><li>web3.py</li><li>WebSockets</li><li>Next.js</li><li>TypeScript</li><li>Tailwind CSS</li></ul>
+<h2>What it does in practice</h2><ul><li>Turns raw on-chain activity into a readable, real-time event feed.</li><li>Lets ideas be tested in simulation before any capital is involved.</li></ul>
+<p class="note">Not financial advice. Proprietary project, source code private.</p>
+<footer>Built by <a href="https://github.com/jryahia">Yahya Jarray</a> &middot;
+<a href="mailto:yahiajarray43@gmail.com">yahiajarray43@gmail.com</a> &middot;
+<a href="https://github.com/jryahia/showcase-prediction-market-monitor">Repository</a><br>This repository contains no source code. It is a case study for a proprietary project. &copy; Yahya Jarray.</footer>
+</main></body></html>
